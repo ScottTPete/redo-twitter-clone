@@ -8,6 +8,11 @@ $(document).ready(function() { //when page is loaded do the following.
 	
 	
 	tweetControls.hide(); //hides element immediately
+	$('.tweet-actions').hide();
+	$('.stats').hide();
+	$('.reply').hide();
+	
+	
 	
 	//when element with class of tweet-compose is clicked do the following.
 	tweetCompose.on('click', function(){
@@ -35,7 +40,7 @@ $(document).ready(function() { //when page is loaded do the following.
 		
 		//remCharCount now stores the difference of max length and the length of tweet-compose
 		var remCharCount = maxTweetLength - length;
-		console.log(remCharCount)
+		
 		//sets text found in char-count element to val of remCharCount
 		charCount.text(remCharCount);
 		if(remCharCount <= 20 && remCharCount >= 11) {
@@ -60,22 +65,21 @@ $(document).ready(function() { //when page is loaded do the following.
 		
 		
 		//assign newTweet  to a clone of the entire tweet element and its children elements as well as styles
-		var newTweet = $('.tweet').clone().eq(0);
+		var newTweet = tweet.clone(true).eq(0); //needs true inside of clone so that it will also have event listeners.
 		//user tweet is = to tweet-compose value
-		var userTweet = $('.tweet-compose').val();
+		var userTweet = tweetCompose.val();
 		//avatar is a ref to img dir and an img there called alagoon
 		var avatar = "img/alagoon.jpg";
 		//sets username and fullname
 		var username = "@ScottTPete";
 		var fullName = "Scott Peterson";	
 		
-		console.log(newTweet)
 		
-		//if there is a value find do this
+		//if there is a value in tweet-compose do this
 		if(tweetCompose.val()) {
-			//finds elements and adds either html or attrbs based on specified variables
+			//finds elements in newTweet and changes/adds either html or attrbs based on specified variables
 			newTweet.find(".tweet-text").html(userTweet);
-			newTweet.find('.avatar').attr('src',avatar);
+			newTweet.find('.avatar').attr('src', avatar);
 			newTweet.find(".username").html(username);
 			newTweet.find('.fullname').html(fullName);
 			newTweet.find('.num-retweets').html('0');
@@ -86,38 +90,54 @@ $(document).ready(function() { //when page is loaded do the following.
 			$('#stream').prepend(newTweet);
 			
 			tweetCompose.val(''); //reset tweet-compose val to nothing.
-			charCount.text(140);
+			
+			charCount.text(140); //resets char count
 			
 			tweetCompose.css('height', '2.5em')//change tweet-compose height back to normal
 		
 			tweetControls.hide(); //hides tweet controls
+			
+			$('.tweet-actions',this).hide();
+			$('.stats', this).hide();
+			$('.reply', this).hide();
 		};
 	});
 	
-	$('.tweet-actions').hide();
-	$('.stats').hide();
-	$('.reply').hide();
-
-
-	tweet.on('mouseover', function() {
-		$('.tweet-actions', this).show()
-		$('.stats', this).show()
-	})
 	
+	//whatever tweet you enter show specified element
+	tweet.on('mouseenter', function() {
+		$('.tweet-actions',this).show();
+	});
+
 	tweet.on('mouseleave', function() {
 		$('.tweet-actions', this).hide();
-		$('.stats', this).hide();
 	});
 	
+	
+	
+	var showTweetFeatures = false;
+	
+	//if on click showTweetFeatures is false do the following. otherwise reverse everything.
 	tweet.on('click', function() {
-		$('.stats', this).toggle();
-		$('.tweet-actions', this).toggle();
+		if(showTweetFeatures === false) {
+			$('.tweet-actions',this).show();
+			$('.stats', this).show();
+			$('.reply', this).show();
+			tweet.on('mouseleave', function() {
+				$('.tweet-actions', this).toggle();
+			});
+			showTweetFeatures = true;
+		} else {
+			$('.tweet-actions',this).hide();
+			$('.stats', this).hide();
+			$('.reply', this).hide();
+			tweet.on('mouseleave', function() {
+				$('.tweet-actions', this).toggle();
+			});
+			showTweetFeatures =false;
+			
+		}
 	})
-	
-	
-	
-	
-	
 	
 	
 	
