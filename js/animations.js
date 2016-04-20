@@ -97,55 +97,38 @@ $(document).ready(function() { //when page is loaded do the following.
 		
 			tweetControls.hide(); //hides tweet controls
 			
-			$('.tweet-actions',this).hide();
-			$('.stats', this).hide();
-			$('.reply', this).hide();
+			newTweet.find('.tweet-actions').hide();
+			newTweet.find('.stats').hide();
+			newTweet.find('.reply').hide();
 		};
 	});
 	
-	
-	//whatever tweet you enter show specified element
-	tweet.on('mouseenter', function() {
-		$('.tweet-actions',this).show();
-	});
-
-	tweet.on('mouseleave', function() {
-		$('.tweet-actions', this).hide();
-	});
-	
-	
-	
-	var showTweetFeatures = false;
-	
-	//if on click showTweetFeatures is false do the following. otherwise reverse everything.
-	tweet.on('click', function() {
-		if(showTweetFeatures === false) {
-			$('.tweet-actions',this).show();
-			$('.stats', this).show();
-			$('.reply', this).show();
-			tweet.on('mouseleave', function() {
-				$('.tweet-actions', this).toggle();
-			});
-			showTweetFeatures = true;
-		} else {
-			$('.tweet-actions',this).hide();
-			$('.stats', this).hide();
-			$('.reply', this).hide();
-			tweet.on('mouseleave', function() {
-				$('.tweet-actions', this).toggle();
-			});
-			showTweetFeatures =false;
-			
+	////////////////////////////////////////////////////////////////
+	////Used to toggle elements showing/hiding on hover/on click////
+	////////////////////////////////////////////////////////////////
+	tweet.hover( function(){
+		if(!$('.tweet-actions', this).hasClass('clicked')) {
+		   $('.tweet-actions',this).show();
 		}
-	})
+		
+	}, function(){
+		if(!$('.tweet-actions', this).hasClass('clicked')) {
+			$('.tweet-actions',this).toggle();
+		
+		   
+		} 
+	});
 	
-	
-	
-	
-	
-	
-	
-	
+	tweet.click(function() {
+		
+		$('.tweet-actions',this).toggleClass('clicked');
+		$('.reply',this).toggleClass('clicked');
+		$('.stats',this).toggleClass('clicked');
+		$('.stats', this).toggle();
+		$('.reply', this).toggle();
+		
+	});
+	////////////////////////////////////////////////////////////////
 	
 	
 	
