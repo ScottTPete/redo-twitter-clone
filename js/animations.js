@@ -1,5 +1,7 @@
 $(document).ready(function() { //when page is loaded do the following.
 	
+	var timeStamp = $("time.timeago").timeago();
+	
 	var tweetCompose = $('.tweet-compose');
 	var tweetControls = $("#tweet-controls");
 	var charCount = $('#char-count');
@@ -85,6 +87,8 @@ $(document).ready(function() { //when page is loaded do the following.
 			newTweet.find('.num-retweets').html('0');
 			newTweet.find('.num-favorites').html('0');
 			newTweet.find('.reply > .tweet-compose').attr('placeholder', 'Reply to @ScottTPete');
+//			console.log(newTweet.find('.timeago'))
+			newTweet.find('.timeago').text($.timeago('update', new Date()));
 			
 			//adds newTweet to timeline as top tweet.
 			$('#stream').prepend(newTweet);
