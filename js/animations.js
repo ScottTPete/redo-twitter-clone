@@ -1,6 +1,13 @@
 $(document).ready(function() { //when page is loaded do the following.
 	
-	var timeStamp = $("time.timeago").timeago();
+	
+	
+//		console.log($.timeago());
+		
+		jQuery("time.timeago").timeago();
+	
+		console.log($('time'))
+	
 	
 	var tweetCompose = $('.tweet-compose');
 	var tweetControls = $("#tweet-controls");
@@ -77,18 +84,19 @@ $(document).ready(function() { //when page is loaded do the following.
 		var fullName = "Scott Peterson";	
 		
 		
+		
 		//if there is a value in tweet-compose do this
 		if(tweetCompose.val()) {
 			//finds elements in newTweet and changes/adds either html or attrbs based on specified variables
-			newTweet.find(".tweet-text").html(userTweet);
-			newTweet.find('.avatar').attr('src', avatar);
-			newTweet.find(".username").html(username);
-			newTweet.find('.fullname').html(fullName);
-			newTweet.find('.num-retweets').html('0');
-			newTweet.find('.num-favorites').html('0');
+			newTweet.find(".tweet-text").html(userTweet)
+			newTweet.find('.avatar').attr('src', avatar)
+			newTweet.find(".username").html(username)
+			newTweet.find('.fullname').html(fullName)
+			newTweet.find('.num-retweets').html('0')
+			newTweet.find('.num-favorites').html('0')
 			newTweet.find('.reply > .tweet-compose').attr('placeholder', 'Reply to @ScottTPete');
-//			console.log(newTweet.find('.timeago'))
-			newTweet.find('.timeago').text($.timeago('update', new Date()));
+			newTweet.find('.users-interact').empty() //gets rid of any children or text of users-interact. In this case the imgs of who retweeted. 
+//			newTweet.find('.timeago').html(); //create a new Date using timeago and create a stamp out of that date should update the stamp automatically
 			
 			//adds newTweet to timeline as top tweet.
 			$('#stream').prepend(newTweet);
@@ -105,14 +113,19 @@ $(document).ready(function() { //when page is loaded do the following.
 			newTweet.find('.stats').hide();
 			newTweet.find('.reply').hide();
 		};
+		
+		
+		jQuery(".timeago").timeago(); //call it again for new tweet
 	});
+	
+
 	
 	////////////////////////////////////////////////////////////////
 	////Used to toggle elements showing/hiding on hover/on click////
 	////////////////////////////////////////////////////////////////
 	tweet.hover( function(){
 		if(!$('.tweet-actions', this).hasClass('clicked')) {
-		   $('.tweet-actions',this).show();
+		   $('.tweet-actions',this).show('slow');
 		}
 		
 	}, function(){
@@ -123,6 +136,8 @@ $(document).ready(function() { //when page is loaded do the following.
 		} 
 	});
 	
+	var replyText = true;
+	
 	tweet.click(function() {
 		
 		$('.tweet-actions',this).toggleClass('clicked');
@@ -130,6 +145,10 @@ $(document).ready(function() { //when page is loaded do the following.
 		$('.stats',this).toggleClass('clicked');
 		$('.stats', this).toggle();
 		$('.reply', this).toggle();
+		
+		
+		
+		
 		
 	});
 	////////////////////////////////////////////////////////////////
