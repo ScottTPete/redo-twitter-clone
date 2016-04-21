@@ -1,6 +1,8 @@
 $(document).ready(function() { //when page is loaded do the following.
 	
-	var timeStamp = $("time.timeago").timeago();
+	
+	prepareDynamicDates();
+	$(".timeago").timeago();
 	
 	var tweetCompose = $('.tweet-compose');
 	var tweetControls = $("#tweet-controls");
@@ -105,6 +107,7 @@ $(document).ready(function() { //when page is loaded do the following.
 			newTweet.find('.stats').hide();
 			newTweet.find('.reply').hide();
 		};
+		$(".timeago").timeago();
 	});
 	
 	////////////////////////////////////////////////////////////////
